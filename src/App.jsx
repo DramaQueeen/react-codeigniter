@@ -1,14 +1,9 @@
-import React from "react"
-import {useState} from "react"
+import React from 'react'
+import {useState} from 'react'
+import Form from './components/Form'
+import Notes from './components/Notes'
 
 function Dashboard(){
-
-	const initialNotes = {
-		id: '', 
-		title: '', 
-		body: ''
-	}
-	const [note, setNote] = useState(initialNotes); //Guardaran los datos en initialNotes
 
 	const [notes, setNotes] = useState([
 		{id: 1, title: 'nota1', body: 'lorem ipsum'},
@@ -19,25 +14,7 @@ function Dashboard(){
 	]);
 
 
-	const addNote = (e) => {
 
-		e.preventDefault();
-
-		if(note.title === "" || note.body === ""){return}
-
-		setNotes([
-			...notes, //para obtener todas las notas
-				{
-					...note, //para obtener lo ya escrito
-					id: Math.max(...notes.map(note => note.id)) + 1
-				}
-			])
-
-		console.log(Math.max(...notes.map(note => note.id)) + 1); //Para que nos de el número mayor y ... para que solo devuelva numeros.
-
-		// note.map(note => note.id);
-
-	}
 
 	// const changeState = () => {
 		
@@ -52,28 +29,8 @@ function Dashboard(){
 			
 			<h1>Listado de notas</h1>
 
-			<ul>
-			{
-				//Recorriendo el array con map
-				notes.map(note => {
-					return <li key={note.id}>ID: {note.id} titulo: {note.title} Cuerpo: {note.body}</li>;
-				})
-			}
-			</ul>
-
-			<form onSubmit={addNote} >
-				<label htmlFor="title">
-					Título
-					<input id="title" type="text" onChange={(e) => setNote({...note,title: e.target.value})} />
-				</label>
-				<br/>
-				<label htmlFor="body">
-					Cuerpo
-					<input id="body" type="text" onChange={(e) => setNote({...note,body: e.target.value})} />
-				</label>
-				<br/>
-				<button>Agregar</button>
-			</form>
+			<Notes notes={notes}></Notes>
+			<Form notes={notes} setNotes={setNotes}></Form>
 		</div>
 
 	)
