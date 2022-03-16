@@ -14,13 +14,13 @@ const Form = ({notes, setNotes}) => {
 
 		e.preventDefault();
 
-		if(note.title === "" || note.body === ""){return}
+		if(note.title.trim() === "" || note.body.trim() === ""){return}
 
 			setNotes([
 			...notes, //para obtener todas las notas
 			{
 					...note, //para obtener lo ya escrito
-					id: Math.max(...notes.map(note => note.id)) + 1
+					id: notes.length > 0 ? Math.max(...notes.map(note => note.id)) + 1 : 1
 				}
 				])
 
@@ -28,18 +28,20 @@ const Form = ({notes, setNotes}) => {
 
 		// note.map(note => note.id);
 
+		setNote(initialNotes);
+
 	}
 
 	return (
 		<form onSubmit={addNote} >
 			<label htmlFor="title">
 				Título
-				<input id="title" type="text" onChange={(e) => setNote({...note,title: e.target.value})} />
+				<input id="title" value={note.title} type="text" onChange={(e) => setNote({...note,title: e.target.value})} />
 			</label>
 			<br/>
 			<label htmlFor="body">
 				Cuerpo
-				<input id="body" type="text" onChange={(e) => setNote({...note,body: e.target.value})} />
+				<input id="body" value={note.body} type="text" onChange={(e) => setNote({...note,body: e.target.value})} />
 			</label>
 			<br/>
 			<button>Agregar</button>

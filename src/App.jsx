@@ -29,7 +29,7 @@ function Dashboard(){
 			
 			<h1>Listado de notas</h1>
 
-			<Notes notes={notes}></Notes>
+			<Notes notes={notes} setNotes={setNotes}></Notes>
 			<Form notes={notes} setNotes={setNotes}></Form>
 		</div>
 
