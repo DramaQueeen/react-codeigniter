@@ -11,12 +11,21 @@ const Notes = ({notes, setNotes}) => {
 		setNotes(newNotes);
 	}
 
+	const updateNote = (newNote) => {
+
+		setNotes(
+			notes.map(note => note.id === newNote.id ? newNote : note)
+		);
+		console.log(newNote);
+
+	}
+
 	return (
 		<ul>
 		{
 			//Recorriendo el array con map
 			notes.map(note => {
-				return <Note key={note.id} note={note} deleteNote={deleteNote}></Note>;
+				return <Note key={note.id} updateNote = {updateNote} note={note} deleteNote={deleteNote}></Note>;
 			})
 		}
 		</ul>
