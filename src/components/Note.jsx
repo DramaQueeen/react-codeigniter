@@ -6,52 +6,66 @@ const Note = ({note, deleteNote, updateNote}) => {
 	const [modeEdit, setModeEdit] = useState(false);
 	const [item, setItem] = useState(note);
 
-	const toggle = () => {
+	const toggle = (e) => {
+		e.preventDefault();
 		setModeEdit(!modeEdit);
 		setItem(note);
 	}
 
-	const edit = () => {
+	const edit = (e) => {
+		e.preventDefault();
 		updateNote(item);
 		setModeEdit(!modeEdit);
 	}
 
 	return (
-		<li style={{marginBottom: '.6em'}}>
-			<div>ID: {note.id}</div>
-			{
-				modeEdit ? 
+		<div className="column is-one-quarter">
+			<div className="card">
+				<header className="card-header">
+					<p className="card-header-title">
+						ID: {note.id}
+					</p>
+				</header>
+				<div className="card-content">
+						
+						{
+							modeEdit ? 
 
-				<label>
-					Titulo: 
-					<input type="text" value={item.title} onChange={(e) => setItem({...item, title: e.target.value})}/>
-				</label>
-				: <div>titulo: {note.title}</div>
-			}
-			{
-				modeEdit ? 
+							<div className="field">
+								<label className="label" htmlFor="title">Título</label>
+								<div className="control">
+									<input className="input" type="text" value={item.title} onChange={(e) => setItem({...item, title: e.target.value})} />
+								</div>
+							</div>
 
-				<label>
-					Cuerpo: 
-					<input type="text" value={item.body} onChange={(e) => setItem({...item, body: e.target.value})}/>
-				</label>
-				: <div>Cuerpo: {note.body}</div>
-			}
-			
-			{
-				modeEdit &&
-				<button onClick={() => edit()}>Guardar</button>
-			}
-			
-			<button onClick={() => toggle()}>{modeEdit ? 'Cancelar' : 'Editar'}</button> 
+							: <div>titulo: {note.title}</div>
+						}
+						{
+							modeEdit ? 
 
-			{
-				!modeEdit &&
-				<button onClick={() => deleteNote(note.id)}>x</button> 
-			}
+							<div className="field">
+								<label className="label" htmlFor="body">Cuerpo</label>
+								<div className="control">
+									<textarea className="textarea" value={item.body} onChange={(e) => setItem({...item, body: e.target.value})}></textarea>
+								</div>
+							</div>
 
-			
-		</li>
+							: <div>Cuerpo: {note.body}</div>
+						}
+						
+				</div>
+				<footer className="card-footer">
+					<a href="{'/'}" className="card-footer-item" onClick={(e) => toggle(e)}>{modeEdit ? 'Cancelar' : 'Editar'}</a>
+					{
+						modeEdit ?
+						<a href="{'/'}" className="card-footer-item" onClick={(e) => edit(e)}>Guardar</a>
+						:
+						<a href="{'/'}" className="card-footer-item" onClick={(e) => deleteNote(note.id, e)}>Eliminar</a> 
+					}
+					
+				</footer>
+			</div>
+		</div>
 	);
 }
 

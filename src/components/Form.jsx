@@ -33,19 +33,25 @@ const Form = ({notes, setNotes}) => {
 	}
 
 	return (
-		<form onSubmit={addNote} >
-			<label htmlFor="title">
-				Título
-				<input id="title" value={note.title} type="text" onChange={(e) => setNote({...note,title: e.target.value})} />
-			</label>
-			<br/>
-			<label htmlFor="body">
-				Cuerpo
-				<input id="body" value={note.body} type="text" onChange={(e) => setNote({...note,body: e.target.value})} />
-			</label>
-			<br/>
-			<button>Agregar</button>
-		</form>
+		<div className="has-background-success-light p-3">
+			<form onSubmit={addNote} >
+
+				<div className="field">
+					<label className="label" htmlFor="title">Título</label>
+					<div className="control">
+						<input className="input" id="title" value={note.title} type="text" onChange={(e) => setNote({...note,title: e.target.value})} />
+					</div>
+				</div>
+
+				<div className="field">
+					<label className="label" htmlFor="body">Cuerpo</label>
+					<div className="control">
+						<textarea className="textarea" id="body" value={note.body} type="text" onChange={(e) => setNote({...note,body: e.target.value})}> </textarea>
+					</div>
+				</div>
+				<button class="button is-primary">Agregar</button>
+			</form>
+		</div>
 	);
 }
 

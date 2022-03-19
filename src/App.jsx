@@ -25,9 +25,9 @@ function Dashboard(){
 
 	return (
 	
-		<div>
+		<div className="container">
 			
-			<h1>Listado de notas</h1>
+			<h1 className="title has-text-centered mt-5">Listado de notas</h1>
 
 			<Notes notes={notes} setNotes={setNotes}></Notes>
 			<Form notes={notes} setNotes={setNotes}></Form>
