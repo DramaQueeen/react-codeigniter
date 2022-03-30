@@ -1,19 +1,23 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Form from './components/Form'
 import Notes from './components/Notes'
+import Axios from 'axios'
 
 function Dashboard(){
 
-	const [notes, setNotes] = useState([
-		{id: 1, title: 'nota1', body: 'lorem ipsum'},
-		{id: 2, title: 'nota2', body: 'lorem ipsum'},
-		{id: 3, title: 'nota3', body: 'lorem ipsum'},
-		{id: 4, title: 'nota4', body: 'lorem ipsum'},
-		{id: 5, title: 'nota5', body: 'lorem ipsum'}
-	]);
+	useEffect(() => {
 
+		Axios.get("http://notes-api.test/api/notes")
+			.then((payload) => {
+			setNotes(payload.data);
+		}).catch((error) => {
+			console.log(error);
+		});
 
+	}, []);
+
+	const [notes, setNotes] = useState([]);
 
 
 	// const changeState = () => {
