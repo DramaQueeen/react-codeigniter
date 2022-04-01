@@ -1,5 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
+import Axios from 'axios'
 
 const Form = ({notes, setNotes}) => {
 
@@ -14,17 +15,26 @@ const Form = ({notes, setNotes}) => {
 
 		e.preventDefault();
 
-		if(note.title.trim() === "" || note.body.trim() === ""){return}
+		Axios.post("http://notes-api.test/api/notes", note)
+			.then((payload) => {
+			console.log(payload);
+		}).catch((error) => {
+			console.log(error);
+		});
 
-			setNotes([
-			...notes, //para obtener todas las notas
-			{
-					...note, //para obtener lo ya escrito
-					id: notes.length > 0 ? Math.max(...notes.map(note => note.id)) + 1 : 1
-				}
-				])
+		//if(note.title.trim() === "" || note.body.trim() === ""){return}
 
-		console.log(Math.max(...notes.map(note => note.id)) + 1); //Para que nos de el número mayor y ... para que solo devuelva numeros.
+		//Ya no lo necesitaremos
+
+		// 	setNotes([
+		// 	...notes, //para obtener todas las notas
+		// 	{
+		// 			...note, //para obtener lo ya escrito
+		// 			id: notes.length > 0 ? Math.max(...notes.map(note => note.id)) + 1 : 1
+		// 		}
+		// 		])
+
+		// console.log(Math.max(...notes.map(note => note.id)) + 1); //Para que nos de el número mayor y ... para que solo devuelva numeros.
 
 		// note.map(note => note.id);
 
