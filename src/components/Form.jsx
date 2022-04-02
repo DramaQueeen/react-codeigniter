@@ -10,6 +10,10 @@ const Form = ({notes, setNotes}) => {
 		body: ''
 	}
 	const [note, setNote] = useState(initialNotes); //Guardaran los datos en initialNotes
+	const [error, setError] = useState({
+		'body' : '',
+		'title' : ''
+	});
 
 	const addNote = (e) => {
 
@@ -17,9 +21,13 @@ const Form = ({notes, setNotes}) => {
 
 		Axios.post("http://notes-api.test/api/notes", note)
 			.then((payload) => {
-			console.log(payload);
+			setNotes([
+					...notes,
+					payload.data.data
+				]);
+			setNote(initialNotes);
 		}).catch((error) => {
-			console.log(error);
+			setError(error.response.data.messages);
 		});
 
 		//if(note.title.trim() === "" || note.body.trim() === ""){return}
@@ -38,7 +46,7 @@ const Form = ({notes, setNotes}) => {
 
 		// note.map(note => note.id);
 
-		setNote(initialNotes);
+		
 
 	}
 
@@ -51,6 +59,7 @@ const Form = ({notes, setNotes}) => {
 					<div className="control">
 						<input className="input" id="title" value={note.title} type="text" onChange={(e) => setNote({...note,title: e.target.value})} />
 					</div>
+					<span class="help is-danger">{error.title}</span>
 				</div>
 
 				<div className="field">
@@ -58,6 +67,7 @@ const Form = ({notes, setNotes}) => {
 					<div className="control">
 						<textarea className="textarea" id="body" value={note.body} type="text" onChange={(e) => setNote({...note,body: e.target.value})}> </textarea>
 					</div>
+					<span class="help is-danger">{error.body}</span>
 				</div>
 				<button class="button is-primary">Agregar</button>
 			</form>
