@@ -20,18 +20,48 @@ class Notes extends ResourceController
     public function create()
     {
 
-        $form = dd($this->request->getJSON(true));
+        $form = $this->request->getJSON(true);  
 
-        return $message = "Probando";
 
-        // if(!$id = $this->model->insert){
-        //     return $this->failValidationErrors($this->model->errors());
-        // }
+        if(!$id = $this->model->insert($form)){
+            return $this->failValidationErrors($this->model->errors());
+        }
 
-        // $note = $this->model->find($id);
+        $note = $this->model->find($id);
 
-        // return $this->respondCreated(['message' => 'Registro creado correctamente', 'data' => $note]);
+        return $this->respondCreated(['message' => 'Registro creado correctamente', 'data' => $note]);
 
+    }
+
+    public function update($id = null)
+    {
+        $form = $this->request->getJSON(true);  
+
+        if(empty($form)){
+            return $this->failValidationErrors('No hay nada que actualizar.');
+        }
+
+        if(!$this->model->find($id)){
+            return $this->failNotFound();
+        }
+
+        if(!$this->model->update($id, $form)){
+            return $this->failValidationErrors($this->model->errors());
+
+        }
+
+        return $this->respondUpdated(['message' => 'Registro actualizado correctamente', 'data' => $this->model->find($id)]);
+    }
+
+    public function delete($id = null)
+    {
+        if(!$this->model->find($id)){
+            return $this->failNotFound();
+        }
+
+        $this->model->where('id', $id)->delete();
+
+        return $this->respondDeleted(['message' => 'Registro ' . $id . ' fue elminado correctamente']);
     }
 }
 

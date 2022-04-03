@@ -26,7 +26,7 @@ class Cors extends \Fluent\Cors\Config\Cors
      *
      * @var array
      */
-    public $allowedHeaders = ['content-type'];
+    public $allowedHeaders = ['*'];
 
     /**
      * --------------------------------------------------------------------------
@@ -37,7 +37,7 @@ class Cors extends \Fluent\Cors\Config\Cors
      *
      * @var array
      */
-    public $allowedMethods = ['OPTIONS, GET, PUT, POST, DELETE'];
+    public $allowedMethods = ['*'];
 
     /**
      * --------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class Cors extends \Fluent\Cors\Config\Cors
      *
      * @var array
      */
-    public $allowedOrigins = ['http://localhost:8080'];
+    public $allowedOrigins = ['*'];
 
     /**
      * --------------------------------------------------------------------------
