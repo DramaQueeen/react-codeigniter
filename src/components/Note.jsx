@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState} from 'react'
 
-const Note = ({note, deleteNote, updateNote}) => {
+const Note = ({note, deleteNote, updateNote, setError, error}) => {
 
 	const [modeEdit, setModeEdit] = useState(false);
 	const [item, setItem] = useState(note);
@@ -14,8 +14,11 @@ const Note = ({note, deleteNote, updateNote}) => {
 
 	const edit = (e) => {
 		e.preventDefault();
+
 		updateNote(item);
-		setModeEdit(!modeEdit);
+
+		setModeEdit(false);
+		
 	}
 
 	return (
@@ -36,6 +39,7 @@ const Note = ({note, deleteNote, updateNote}) => {
 								<div className="control">
 									<input className="input" type="text" value={item.title} onChange={(e) => setItem({...item, title: e.target.value})} />
 								</div>
+								<span class="help is-danger">{error.title}</span>
 							</div>
 
 							: <div>titulo: {note.title}</div>
@@ -48,6 +52,7 @@ const Note = ({note, deleteNote, updateNote}) => {
 								<div className="control">
 									<textarea className="textarea" value={item.body} onChange={(e) => setItem({...item, body: e.target.value})}></textarea>
 								</div>
+								<span class="help is-danger">{error.body}</span>
 							</div>
 
 							: <div>Cuerpo: {note.body}</div>
